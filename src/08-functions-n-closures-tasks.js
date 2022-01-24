@@ -162,24 +162,16 @@ function retry(func, attempts) {
  * cos(3.141592653589793) ends
  *
  */
-function logger(/* func, logFunc */) {
-  // return function loggerFunc(args) {
-  //   console.log('args: ', args);
-  //   // eslint-disable-next-line prefer-rest-params
-  //   console.log('arguments: ', arguments);
-  //   // eslint-disable-next-line prefer-rest-params
-  //   const argsArr = Object.values(arguments);
-  //   // eslint-disable-next-line prefer-rest-params
-  //   console.log('argsArr: ', argsArr);
-  //   // eslint-disable-next-line prefer-rest-params
-  //   logFunc(`${func.name}(${argsArr[0]}) starts`);
-  //   const rezult = func(argsArr);
-  //   console.log('rezult: ', rezult);
-  //   // eslint-disable-next-line prefer-rest-params
-  //   logFunc(`${func.name}(${argsArr}) ends`);
-  //   return rezult;
-  // };
-  throw new Error('Not implemented');
+function logger(func, logFunc) {
+  return function loggerFn(...args) {
+    const funcArgs = args.map((item) => JSON.stringify(item));
+
+    logFunc(`${func.name}(${funcArgs}) starts`);
+    const result = func(...args);
+    logFunc(`${func.name}(${funcArgs}) ends`);
+    return result;
+  };
+  // throw new Error('Not implemented');
 }
 
 
